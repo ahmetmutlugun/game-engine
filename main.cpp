@@ -53,7 +53,7 @@ void createTriangle() {
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	// GL Dynamic Draw allows us to change the points on the array.
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -93,7 +93,7 @@ void addShader(GLint program, const char* shaderCode, GLenum shaderType) {
 
 void compileShaders() {
 	shader = glCreateProgram();
-	
+
 	if (!shader) {
 		printf("An error occured while creating shader program!");
 		return;
@@ -187,7 +187,7 @@ int main() {
 			direction = !direction;
 		}
 
-		curAngle += 0.01f;
+		curAngle += 0.1f;
 		if (curAngle >= 360) {
 			curAngle -= 360;
 		}
@@ -198,11 +198,11 @@ int main() {
 		glUseProgram(shader);
 
 		glm::mat4 model(1.0f);
-		
-		
+
+
 		model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
 		model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
-		
+
 
 		glUniform1f(uniformModel, triOffset);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -212,7 +212,7 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glBindVertexArray(0);
-			
+
 		glUseProgram(0);
 
 		glfwSwapBuffers(mainWindow);
