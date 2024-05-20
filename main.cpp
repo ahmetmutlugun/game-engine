@@ -18,18 +18,19 @@ const float toRadians = 3.141592653589793f / 180.0f;
 bool direction = true;
 float triOffset = 0.0f;
 float triMaxOffset = 0.6f;
-float triIncrement = 0.00005f;
+float triIncrement = 0.005f;
 float curAngle = 0.0f;
+float rotSpeed = 1.1f;
 
 // Vertex Shader
-static const char* vShader = "											\n\
-#version 330															\n\
-																		\n\
-layout(location = 0) in vec3 pos;										\n\
-uniform mat4 model;													\n\
-void main(){															\n\
+static const char* vShader = "						    					\n\
+#version 330									   	      					\n\
+												    						\n\
+layout(location = 0) in vec3 pos;				       						\n\
+uniform mat4 model;								         					\n\
+void main(){										      					\n\
 	gl_Position = model * vec4(0.4 * pos.x, 0.4 * pos.y, 0.4 * pos.z, 1.0);	\n\
-}																		\n\
+}															    			\n\
 ";
 
 static const char* fShader = "									\n\
@@ -187,7 +188,7 @@ int main() {
 			direction = !direction;
 		}
 
-		curAngle += 0.1f;
+		curAngle += rotSpeed;
 		if (curAngle >= 360) {
 			curAngle -= 360;
 		}

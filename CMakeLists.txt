@@ -1,10 +1,14 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 project(OpenGLProject)
 
 set(CMAKE_CXX_STANDARD 11)
 
 # Enable generation of compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
+endif()
 
 # Set include directories for MacOS
 include_directories(

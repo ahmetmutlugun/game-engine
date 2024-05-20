@@ -413,3 +413,4 @@ build/
 compile_commands.json
 program
 .DS_Store
+release_build/
