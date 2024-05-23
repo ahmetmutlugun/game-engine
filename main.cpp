@@ -22,6 +22,12 @@ float triIncrement = 0.005f;
 float curAngle = 0.0f;
 float rotSpeed = 1.1f;
 
+bool sizeDirection = true;
+float curSize = 0.5f;
+float maxSize = 0.5f;
+float minSize = 0.1f;
+float sizeIncr = 0.05f;
+
 // Vertex Shader
 static const char* vShader = "						    					\n\
 #version 330									   	      					\n\
@@ -29,7 +35,7 @@ static const char* vShader = "						    					\n\
 layout(location = 0) in vec3 pos;				       						\n\
 uniform mat4 model;								         					\n\
 void main(){										      					\n\
-	gl_Position = model * vec4(0.4 * pos.x, 0.4 * pos.y, 0.4 * pos.z, 1.0);	\n\
+	gl_Position = model * vec4(pos, 1.0);	\n\
 }															    			\n\
 ";
 
@@ -192,6 +198,17 @@ int main() {
 		if (curAngle >= 360) {
 			curAngle -= 360;
 		}
+
+		if(sizeDirection) {
+		    curSize += sizeIncr;
+        }else {
+            curSize -= sizeIncr;
+		}
+
+		if(curSize >= maxSize || curSize <= minSize){
+		    sizeDirection = !sizeDirection;
+		}
+
 		// Clear window
 		glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -200,9 +217,9 @@ int main() {
 
 		glm::mat4 model(1.0f);
 
-
-		model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
 		model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(triOffset, triOffset, 1.0f));
 
 
 		glUniform1f(uniformModel, triOffset);
